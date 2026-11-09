@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+=====================================================================
+  SITEMAP — BMW KAB AAYEGI?
+=====================================================================
+  File     : sitemap.xml
+  Version  : 3.0.0
+  Domain   : https://bmwkabayegi.in
+  Updated  : 2026-01-15
+  Purpose  : Help search engines discover and index all pages
+
+  CONNECTIONS
+  ─────────────────────────────────────────────────────────────────────
+  • robots.txt        → Sitemap: https://bmwkabayegi.in/sitemap.xml
+  • index.html        → canonical + og:url (MUST match this domain)
+  • manifest.json     → start_url "/" (relative, matches this domain)
+  • config.js         → production domain detection
+  • server.js         → serves this file with Cache-Control 1h
+
+  VALIDATION
+  ─────────────────────────────────────────────────────────────────────
+  • XML syntax : https://www.xml-sitemaps.com/validate-xml-sitemap.html
+  • Google     : https://search.google.com/search-console → Sitemaps
+  • Bing       : https://www.bing.com/webmasters → Sitemaps
+
+  SCHEMA
+  ─────────────────────────────────────────────────────────────────────
+  <urlset>          → root (required)
+  <url>             → one per page
+  <loc>             → page URL (required, absolute)
+  <lastmod>         → last modification date (YYYY-MM-DD)
+  <changefreq>      → how often it changes (hint only)
+  <priority>        → 0.0–1.0 (relative importance)
+
+  RULES
+  ─────────────────────────────────────────────────────────────────────
+  1. NEVER add admin.html, /api/*, or private pages
+  2. All URLs MUST use https:// and match canonical domain
+  3. <lastmod> MUST be today or past (never future)
+  4. <priority> is a HINT — Google ignores it mostly
+  5. Keep <changefreq> realistic (weekly/monthly/yearly)
+  6. Max 50,000 URLs per sitemap (we have 4 — fine)
+  7. Max 50MB uncompressed (we have ~4KB — fine)
+
+  MAINTENANCE
+  ─────────────────────────────────────────────────────────────────────
+  • Update <lastmod> when page content changes
+  • Add new <url> block for each new page
+  • Review quarterly (next: 2026-04-15)
+=====================================================================
+-->
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- =================================================================
+       HOMEPAGE
+       ─────────────────────────────────────────────────────────────────
+       The main page. Highest priority. Contains hero + calculator.
+       ================================================================= -->
+  <url>
+    <loc>https://bmwkabayegi.in/</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+
+    <!-- Image sitemap: OG image for social shares -->
+    <image:image>
+      <image:loc>https://bmwkabayegi.in/assets/og-image.jpg</image:loc>
+      <image:title>BMW Kab Aayegi? — Free Calculator</image:title>
+      <image:caption>Calculate when you can afford your dream BMW</image:caption>
+    </image:image>
+  </url>
+
+  <!-- =================================================================
+       CALCULATOR SECTION
+       ─────────────────────────────────────────────────────────────────
+       Main feature — the EMI calculator. High priority.
+       Anchor URL (#calculator) helps Google understand page structure.
+       ================================================================= -->
+  <url>
+    <loc>https://bmwkabayegi.in/#calculator</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- =================================================================
+       DELIVERY FORM SECTION
+       ─────────────────────────────────────────────────────────────────
+       Secondary conversion point. Monthly updates likely.
+       ================================================================= -->
+  <url>
+    <loc>https://bmwkabayegi.in/#form</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- =================================================================
+       CONTACT SECTION
+       ─────────────────────────────────────────────────────────────────
+       Rarely changes. Low priority.
+       ================================================================= -->
+  <url>
+    <loc>https://bmwkabayegi.in/#contact</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>
+<!-- =====================================================================
+     END OF SITEMAP
+     ===================================================================== -->

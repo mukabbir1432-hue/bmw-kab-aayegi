@@ -1,0 +1,382 @@
+# =====================================================================
+# ROBOTS.TXT — BMW KAB AAYEGI?
+# =====================================================================
+# File     : robots.txt
+# Version  : 2.0.0
+# Domain   : https://bmwkabayegi.in
+# Updated  : 2026-01-15
+# Purpose  : Guide search engine crawlers, block sensitive paths
+#
+# CONNECTED FILES
+# ─────────────────────────────────────────────────────────────────────
+# • sitemap.xml       → listed below (Sitemap: line)
+# • admin.html        → blocked (Disallow: /admin)
+# • /api/*            → blocked (backend endpoints)
+# • config.js         → blocked (internal config)
+# • sw.js             → blocked (service worker)
+# • .env              → blocked (secrets)
+#
+# VALIDATION
+# ─────────────────────────────────────────────────────────────────────
+# Test with Google Search Console:
+#   https://search.google.com/search-console/robots-testing-tool
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# DEFAULT — ALL CRAWLERS
+# ---------------------------------------------------------------------
+# Rules apply to every crawler unless overridden below.
+
+User-agent: *
+Allow: /
+
+# --- Block: Admin dashboard (not for public) ---
+Disallow: /admin.html
+Disallow: /admin
+Disallow: /admin/
+
+# --- Block: Backend API (not crawlable) ---
+Disallow: /api/
+Disallow: /api
+
+# --- Block: Internal config & service worker ---
+Disallow: /config.js
+Disallow: /sw.js
+Disallow: /manifest.json
+
+# --- Block: Sensitive file extensions ---
+Disallow: /*.env
+Disallow: /*.env.*
+Disallow: /*.log
+Disallow: /*.sql
+Disallow: /*.bak
+Disallow: /*.old
+Disallow: /*.zip
+Disallow: /*.tar
+Disallow: /*.gz
+Disallow: /*.rar
+Disallow: /*.7z
+
+# --- Block: Version control & dev artifacts ---
+Disallow: /.git/
+Disallow: /.github/
+Disallow: /.vscode/
+Disallow: /.idea/
+Disallow: /node_modules/
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /yarn.lock
+
+# --- Block: Common sensitive paths ---
+Disallow: /.well-known/security.txt
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /backup/
+Disallow: /backups/
+Disallow: /temp/
+Disallow: /cache/
+
+# --- Block: Query parameters that duplicate content ---
+Disallow: /*?ref=
+Disallow: /*?utm_
+Disallow: /*?fbclid=
+Disallow: /*?gclid=
+Disallow: /*&ref=
+Disallow: /*&utm_
+
+# --- Allow: Static assets (images, CSS, JS for rendering) ---
+Allow: /assets/
+Allow: /style.css
+Allow: /script.js
+Allow: /favicon.ico
+
+# ---------------------------------------------------------------------
+# GOOGLE CRAWLERS
+# ---------------------------------------------------------------------
+# Google Search, Images, Video, News — full access to public content.
+
+User-agent: Googlebot
+Allow: /
+Disallow: /admin.html
+Disallow: /admin
+Disallow: /api/
+Disallow: /config.js
+Disallow: /sw.js
+
+User-agent: Googlebot-Image
+Allow: /assets/
+Allow: /favicon.ico
+Disallow: /admin.html
+Disallow: /api/
+
+User-agent: Googlebot-Mobile
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+# Google AdsBot (for paid campaigns)
+User-agent: AdsBot-Google
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+User-agent: AdsBot-Google-Mobile
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+
+# ---------------------------------------------------------------------
+# BING CRAWLERS
+# ---------------------------------------------------------------------
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin.html
+Disallow: /admin
+Disallow: /api/
+Disallow: /config.js
+Disallow: /sw.js
+
+User-agent: msnbot
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+
+# ---------------------------------------------------------------------
+# OTHER SEARCH ENGINES
+# ---------------------------------------------------------------------
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+User-agent: YandexBot
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+User-agent: Slurp
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+
+# ---------------------------------------------------------------------
+# SOCIAL MEDIA CRAWLERS (for OG previews)
+# ---------------------------------------------------------------------
+# Allow social platforms to fetch pages for link previews.
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+User-agent: Pinterest
+Allow: /
+
+
+# ---------------------------------------------------------------------
+# BAD BOTS — AGGRESSIVE SCRAPERS (BLOCK ALL)
+# ---------------------------------------------------------------------
+# These bots hammer servers without bringing value.
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: MauiBot
+Disallow: /
+
+User-agent: MegaIndex
+Disallow: /
+
+User-agent: SerpstatBot
+Disallow: /
+
+User-agent: SEOkicks
+Disallow: /
+
+User-agent: SeznamBot
+Disallow: /
+
+User-agent: linkdexbot
+Disallow: /
+
+User-agent: Nutch
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: omgili
+Disallow: /
+
+User-agent: omgilibot
+Disallow: /
+
+User-agent: Barkrowler
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: ZoominfoBot
+Disallow: /
+
+User-agent: PiplBot
+Disallow: /
+
+User-agent: spider
+Disallow: /
+
+
+# ---------------------------------------------------------------------
+# AI CRAWLERS — ALLOW (adjust if you want to block)
+# ---------------------------------------------------------------------
+# By default, AI crawlers are allowed. Comment out to block.
+
+User-agent: GPTBot
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+# ---------------------------------------------------------------------
+# SEO MONITORING BOTS (allow for analytics)
+# ---------------------------------------------------------------------
+
+User-agent: UptimeRobot
+Allow: /
+
+User-agent: Pingdom
+Allow: /
+
+User-agent: StatusCake
+Allow: /
+
+User-agent: GTmetrix
+Allow: /
+
+User-agent: PageSpeed Insights
+Allow: /
+
+
+# ---------------------------------------------------------------------
+# ARCHIVERS (optional — allow or block per preference)
+# ---------------------------------------------------------------------
+# Wayback Machine: allow (helps with SEO historical data)
+
+User-agent: ia_archiver
+Allow: /
+
+User-agent: archive.org_bot
+Allow: /
+
+
+# ---------------------------------------------------------------------
+# HOST DIRECTIVE (Yandex-specific)
+# ---------------------------------------------------------------------
+# Tells Yandex which domain is the canonical host.
+
+Host: https://bmwkabayegi.in
+
+
+# ---------------------------------------------------------------------
+# SITEMAP
+# ---------------------------------------------------------------------
+# Location of sitemap.xml — search engines use this to discover pages.
+# MUST match the actual file location.
+
+Sitemap: https://bmwkabayegi.in/sitemap.xml
+
+
+# =====================================================================
+# END OF ROBOTS.TXT
+# =====================================================================
+#
+# NOTES FOR MAINTENANCE:
+# ─────────────────────────────────────────────────────────────────────
+# 1. When you add a new admin path → add "Disallow: /newpath"
+# 2. When you change domain → update Host: and Sitemap: lines
+# 3. When you add a crawler rule → test in Search Console
+# 4. robots.txt is NOT security — it only guides well-behaved bots.
+#    Real security comes from:
+#    • Auth (X-Admin-Password header in backend)
+#    • Rate limiting (express-rate-limit)
+#    • CORS (strict origin allowlist)
+#    • Helmet (security headers)
+#
+# LAST UPDATED: 2026-01-15
+# NEXT REVIEW  : 2026-04-15 (quarterly)
+# =====================================================================

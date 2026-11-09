@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ============================================================
+         SECURITY: charset must be first
+         ============================================================ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ============================================================
+         PRIMARY META
+         ============================================================ -->
+    <title>BMW Kab Aayegi? — Apna BMW Plan Jaanein</title>
+    <meta name="description" content="Free calculator jo bataye aapki BMW kab aayegi. Apni savings daalein aur plan jaanein.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="BMW Kab Aayegi?">
+    <meta name="theme-color" content="#0066B1">
+
+    <!-- ============================================================
+         CANONICAL — single source of truth
+         ============================================================ -->
+    <link rel="canonical" href="https://bmwkabayegi.in/">
+
+    <!-- ============================================================
+         OPEN GRAPH (Facebook, WhatsApp, LinkedIn)
+         ============================================================ -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bmwkabayegi.in/">
+    <meta property="og:title" content="BMW Kab Aayegi? — Apna BMW Plan Jaanein" id="og-title">
+    <meta property="og:description" content="Free calculator jo bataye aapki BMW kab aayegi. Apni savings daalein aur plan jaanein." id="og-desc">
+    <meta property="og:image" content="https://bmwkabayegi.in/assets/og-image.jpg" id="og-image">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="BMW Kab Aayegi? — Free Calculator">
+    <meta property="og:site_name" content="BMW Kab Aayegi?">
+    <meta property="og:locale" content="en_IN">
+
+    <!-- ============================================================
+         TWITTER CARD
+         ============================================================ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BMW Kab Aayegi? — Apna BMW Plan Jaanein" id="twitter-title">
+    <meta name="twitter:description" content="Free calculator jo bataye aapki BMW kab aayegi." id="twitter-desc">
+    <meta name="twitter:image" content="https://bmwkabayegi.in/assets/og-image.jpg" id="twitter-image">
+    <meta name="twitter:image:alt" content="BMW Kab Aayegi? — Free Calculator">
+
+    <!-- ============================================================
+         FAVICON — inline SVG (no network request)
+         ============================================================ -->
+    <link rel="icon" type="image/svg+xml"
+          href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230066B1'/%3E%3Ctext x='50' y='68' font-size='48' font-family='Poppins,sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E">
+
+    <!-- ============================================================
+         FONTS — Poppins with preconnect + display=swap (FOUT-safe)
+         ============================================================ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+    </noscript>
+
+    <!-- ============================================================
+         STYLESHEET
+         ============================================================ -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ============================================================
+         PRELOAD HERO IMAGE (LCP optimization)
+         ============================================================ -->
+    <link rel="preload" as="image" href="assets/hero-bmw.webp" type="image/webp">
+        <!-- ============================================================
+         GOOGLE ANALYTICS 4
+         ------------------------------------------------------------
+         INSTRUCTIONS:
+         Replace 'G-XXXXXXXXXX' below with your real GA4 Measurement ID.
+         If you don't have one yet, LEAVE IT AS 'G-XXXXXXXXXX' — the
+         script detects the placeholder and does not load GA4,
+         preventing console errors.
+         ============================================================ -->
+    <script>
+      (function () {
+        var GA_ID = 'G-XXXXXXXXXX';   // ← replace with real ID
+        var isPlaceholder = GA_ID.indexOf('XXXX') !== -1;
+        if (isPlaceholder) return;    // skip loading GA4 in dev
+
+        // Load GA4 asynchronously
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(s);
+
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { window.dataLayer.push(arguments); };
+        window.gtag('js', new Date());
+        window.gtag('config', GA_ID, {
+          anonymize_ip: true,
+          send_page_view: true,
+        });
+      })();
+    </script>
+
+    <!-- ============================================================
+         MICROSOFT CLARITY
+         ------------------------------------------------------------
+         INSTRUCTIONS:
+         Replace 'XXXXXXXXXX' with your real Clarity Project ID.
+         If placeholder detected, Clarity is not loaded (no errors).
+         ============================================================ -->
+    <script>
+      (function () {
+        var CLARITY_ID = 'XXXXXXXXXX';  // ← replace with real ID
+        var isPlaceholder = CLARITY_ID.indexOf('XXXX') !== -1;
+        if (isPlaceholder) return;
+
+        (function (c, l, a, r, i, t, y) {
+          c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+          t = l.createElement(r); t.async = 1;
+          t.src = 'https://www.clarity.ms/tag/' + i;
+          y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, 'clarity', 'script', CLARITY_ID);
+      })();
+    </script>
+
+    <!-- ============================================================
+         JSON-LD STRUCTURED DATA (WebApplication)
+         ============================================================ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "BMW Kab Aayegi?",
+      "description": "Free calculator jo bataye aapki BMW kab aayegi. Apni savings daalein aur plan jaanein.",
+      "url": "https://bmwkabayegi.in/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      },
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Car buyers in India"
+      },
+      "inLanguage": "hi-IN"
+    }
+    </script>
+</head>
+<body>
+    <!-- ============================================================
+         HEADER + NAVIGATION
+         ============================================================ -->
+    <header class="header">
+        <div class="container">
+            <div class="logo" aria-label="BMW Kab Aayegi? home">BMW Kab Aayegi?</div>
+
+            <nav class="nav" aria-label="Main navigation">
+                <ul class="nav-list">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#calculator">Calculator</a></li>
+                    <li><a href="#form">Book Test Drive</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+
+                <button
+                    class="nav-toggle"
+                    type="button"
+                    aria-label="Toggle menu"
+                    aria-expanded="false"
+                    aria-controls="mobileNav">
+                    <span></span><span></span><span></span>
+                </button>
+            </nav>
+
+            <nav class="nav-mobile" id="mobileNav" aria-label="Mobile navigation">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#calculator">Calculator</a></li>
+                    <li><a href="#form">Book Test Drive</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ============================================================
+         HERO
+         ============================================================ -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>BMW Kab Aayegi?</h1>
+                <p>Find out when your dream BMW will arrive. Fill in your details below and get an estimated delivery timeline.</p>
+                <a href="#calculator" class="btn btn-primary">Check Delivery Estimate</a>
+            </div>
+        </div>
+    </section>
+        <!-- ============================================================
+         CALCULATOR SECTION
+         ============================================================ -->
+    <section class="calculator-section" id="calculator">
+        <div class="container">
+            <div class="calculator-card">
+                <h2>BMW EMI Calculator</h2>
+                <p class="subtitle">Pata lagayein aapki BMW kab aayegi!</p>
+
+                <form id="bmwCalculatorForm" class="calculator-form" novalidate>
+                    <div class="calc-form-group">
+                        <label for="calcName">Aapka Naam</label>
+                        <input type="text" id="calcName" name="calcName"
+                               placeholder="Jaise: Rahul Sharma"
+                               autocomplete="name"
+                               maxlength="50"
+                               required>
+                    </div>
+
+                    <div class="calc-form-group">
+                        <label for="calcAge">Aapki Umar</label>
+                        <input type="number" id="calcAge" name="calcAge"
+                               min="18" max="80"
+                               placeholder="Umar"
+                               inputmode="numeric"
+                               required>
+                    </div>
+
+                    <div class="calc-form-group">
+                        <label for="calcSavings">Mahine ki Bachat</label>
+                        <select id="calcSavings" name="calcSavings" required>
+                            <option value="">Select karein</option>
+                            <option value="5000">₹5,000</option>
+                            <option value="10000">₹10,000</option>
+                            <option value="15000">₹15,000</option>
+                            <option value="20000">₹20,000</option>
+                            <option value="25000">₹25,000+</option>
+                        </select>
+                    </div>
+
+                    <div class="calc-form-group">
+                        <label for="calcModel">Kaunsa BMW pasand hai</label>
+                        <select id="calcModel" name="calcModel" required>
+                            <option value="">Select karein</option>
+                            <option value="2-series-gran-coupe|4580000">2 Series Gran Coupe — ₹45,80,000</option>
+                            <option value="x1|5090000">X1 — ₹50,90,000</option>
+                            <option value="3-series|7285000">3 Series — ₹72,85,000</option>
+                            <option value="x3|7250000">X3 — ₹72,50,000</option>
+                            <option value="5-series|7480000">5 Series — ₹74,80,000</option>
+                            <option value="x5|9370000">X5 — ₹93,70,000</option>
+                            <option value="x7|12600000">X7 — ₹1,26,00,000</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-calc">
+                        Meri BMW Kab Aayegi? →
+                    </button>
+                    <p class="calc-note">Yeh ek fun calculator hai, financial advice nahi.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         PLAN RESULT (hidden until calculated)
+         ============================================================ -->
+    <section class="plan-result" id="planResult" hidden aria-live="polite">
+        <div class="container">
+            <div class="result-wrapper">
+                <h1 class="result-heading" id="planHeading">…</h1>
+
+                <div class="result-cards">
+                    <div class="result-card card-kitna-chahiye">
+                        <h3 class="card-title title-kitna">Kitna Chahiye</h3>
+                        <div class="result-row">
+                            <span class="result-label">On-road price</span>
+                            <span class="result-value" id="valCarPrice">—</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Down payment (20%)</span>
+                            <span class="result-value" id="valDownPayment">—</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Loan amount</span>
+                            <span class="result-value" id="valLoanAmount">—</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">EMI (5 saal, 9%)</span>
+                            <span class="result-value" id="valEmi">—</span>
+                        </div>
+                    </div>
+
+                    <div class="result-card card-timeline">
+                        <h3 class="card-title title-timeline">Aapka Timeline</h3>
+                        <div class="result-row">
+                            <span class="result-label">Aapki bachat</span>
+                            <span class="result-value" id="valSavings">—</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Down payment ke liye time</span>
+                            <span class="result-value" id="valYears">—</span>
+                        </div>
+                        <div class="result-row timeline-bold" id="valTimelineMsg"></div>
+                    </div>
+
+                    <div class="result-card card-tip">
+                        <h3 class="card-title title-tip">Ek Tip</h3>
+                        <div class="result-row" id="valTip"></div>
+                    </div>
+                </div>
+
+                <div class="progress-section">
+                    <p class="progress-label">
+                        Down payment target: <span id="valDownPaymentTarget">—</span>
+                    </p>
+                    <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <p class="share-prompt">Apna result doston ko bhejein 👇</p>
+
+                <div class="action-buttons">
+                    <button type="button" class="btn btn-whatsapp" id="shareWhatsAppBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"
+                             style="vertical-align:middle;margin-right:8px;">
+                            <path d="M17.5 14.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.5.2-.2.2-.3.3-.5.1-.2.1-.4 0-.5-.1-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.1 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.5.2-.7.2-1.3.2-1.4-.1-.2-.3-.2-.6-.4zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.1-1.3c1.4.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.6 0-3.2-.4-4.5-1.2l-.3-.2-3 .8.8-3-.2-.3c-.8-1.4-1.3-3-1.3-4.6 0-4.6 3.7-8.3 8.3-8.3s8.3 3.7 8.3 8.3-3.7 8.5-8.1 8.5z"/>
+                        </svg>
+                        Result WhatsApp par Share Karein
+                    </button>
+                    <a href="#contact" target="_blank" rel="noopener sponsored"
+                       class="btn btn-orange" id="applyLoanBtn"
+                       data-affiliate="loan">
+                        Car Loan ke liye Apply Karein
+                    </a>
+                    <a href="#contact" target="_blank" rel="noopener sponsored"
+                       class="btn btn-outline-blue" id="insuranceQuoteBtn"
+                       data-affiliate="insurance">
+                        Insurance Quote Lein
+                    </a>
+                </div>
+
+                <p class="action-note" id="loanNote">
+                    Yeh affiliate links hain. Agar aap koi product ya service apply karte hain,
+                    toh humein commission mil sakta hai, lekin aapko koi extra charge nahi dena padega.
+                </p>
+
+                <!-- ===== WhatsApp Lead ===== -->
+                <div class="whatsapp-lead-card">
+                    <h3 class="whatsapp-lead-title">Apna plan WhatsApp par save karein?</h3>
+                    <p class="whatsapp-lead-desc">
+                        Hum aapko 3 mahine baad reminder bhejenge — tab tak aapki savings badh jayegi!
+                    </p>
+                    <form id="whatsappLeadForm" class="whatsapp-lead-form" novalidate>
+                        <div class="form-group">
+                            <label for="whatsappName">Aapka Naam</label>
+                            <input type="text" id="whatsappName" name="name"
+                                   placeholder="Jaise: Rahul Sharma"
+                                   autocomplete="name"
+                                   maxlength="50"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="whatsappPhone">Aapka Mobile Number</label>
+                            <input type="tel" id="whatsappPhone" name="phone"
+                                   placeholder="9876543210"
+                                   inputmode="numeric"
+                                   autocomplete="tel-national"
+                                   pattern="[6-9][0-9]{9}"
+                                   maxlength="10"
+                                   required>
+                        </div>
+                        <button type="submit" class="btn btn-whatsapp-lead" id="whatsappSaveBtn">
+                            WhatsApp par Save Karein
+                        </button>
+                    </form>
+                    <p id="whatsappSuccessMsg" class="success-msg" style="display:none;"
+                       role="status" aria-live="polite"></p>
+                    <p id="whatsappErrorMsg" class="error-msg" style="display:none;"
+                       role="alert" aria-live="assertive"></p>
+                </div>
+
+                <!-- ===== Referral ===== -->
+                <div class="referral-section">
+                    <h3 class="referral-title">Doston ko bhejein aur referral karein 🎁</h3>
+                    <p class="referral-desc">
+                        Apna unique link doston ko bhejein. Jab woh calculate karenge,
+                        aapka referral count badhega!
+                    </p>
+                    <div class="referral-link-container">
+                        <input type="text" id="referralLink"
+                               class="referral-link-input"
+                               readonly
+                               aria-label="Your referral link">
+                        <button type="button" class="btn btn-outline-blue" id="copyReferralBtn">
+                            Copy Link
+                        </button>
+                    </div>
+                    <p class="referral-count" id="referralCount"></p>
+                </div>
+
+                <p class="reset-link-container">
+                    <a href="#" class="reset-link" id="resetFormLink">↻ Phir se Calculate Karein</a>
+                </p>
+                <button type="button" class="btn btn-primary btn-block" id="recalcBtn">
+                    Nayi Ganna Karein
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         LOADING (hidden until calculation starts)
+         ============================================================ -->
+    <section class="loading-section" id="loadingSection" hidden aria-live="polite">
+        <div class="container">
+            <div class="loading-card">
+                <div class="spinner-container">
+                    <div class="spinner" aria-hidden="true"></div>
+                    <span class="car-emoji" aria-hidden="true">🚗</span>
+                </div>
+                <p class="loading-message" id="loadingMessage">Aapki kismat check ho rahi hai...</p>
+            </div>
+        </div>
+    </section>
+        <!-- ============================================================
+         DELIVERY FORM (bottom)
+         ============================================================ -->
+    <section class="form-section" id="form">
+        <div class="container">
+            <h2>Get Your Estimate</h2>
+            <form id="deliveryForm" class="delivery-form" novalidate>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name"
+                           placeholder="Enter your full name"
+                           autocomplete="name"
+                           maxlength="50"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone"
+                           placeholder="+91 98765 43210"
+                           inputmode="tel"
+                           autocomplete="tel"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="model">Interested Model</label>
+                    <select id="model" name="model" required>
+                        <option value="">Select a model</option>
+                        <option value="bmw-3-series">BMW 3 Series</option>
+                        <option value="bmw-5-series">BMW 5 Series</option>
+                        <option value="bmw-x1">BMW X1</option>
+                        <option value="bmw-x3">BMW X3</option>
+                        <option value="bmw-x5">BMW X5</option>
+                        <option value="bmw-i4">BMW i4 (Electric)</option>
+                        <option value="bmw-i7">BMW i7 (Electric)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="color">Preferred Color</label>
+                    <input type="text" id="color" name="color"
+                           placeholder="e.g., Alpine White"
+                           maxlength="30"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="city">Your City</label>
+                    <input type="text" id="city" name="city"
+                           placeholder="Enter your city"
+                           autocomplete="address-level2"
+                           maxlength="50"
+                           required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Get Estimate</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SIMPLE RESULT (bottom form result)
+         ============================================================ -->
+    <section class="result-section" id="result" hidden aria-live="polite">
+        <div class="container">
+            <div class="result-card">
+                <span class="result-icon" aria-hidden="true">🚗</span>
+                <h2>Estimated Delivery</h2>
+                <p id="resultMessage">Thank you, <span id="resultName"></span>!</p>
+                <p id="resultDetail">
+                    Based on your selection, your BMW is expected to arrive around
+                    <strong id="resultDate"></strong>.
+                </p>
+                <div class="result-actions">
+                    <button type="button" class="btn btn-outline" id="editBtn">Edit Details</button>
+                    <button type="button" class="btn btn-primary" id="shareBtn">Share Estimate</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         CONTACT (anchor target for nav)
+         ============================================================ -->
+    <section id="contact" style="padding:40px 0;text-align:center;">
+        <div class="container">
+            <p style="color:#666;font-size:0.9rem;">
+                Questions? Email us at
+                <a href="mailto:hello@bmwkabayegi.in">hello@bmwkabayegi.in</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">BMW Kab Aayegi?</div>
+                <p>&copy; <span id="footerYear">2026</span> BMW Kab Aayegi?. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
+    <script src="config.js" defer></script>
+    <script src="script.js" defer></script>
+
+    <!-- Set current year in footer -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var y = document.getElementById('footerYear');
+        if (y) y.textContent = new Date().getFullYear();
+      });
+    </script>
+
+    <!-- ============================================================
+         SERVICE WORKER REGISTRATION (with error handling)
+         ============================================================ -->
+    <script>
+      if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/sw.js').catch(function (err) {
+            console.log('ServiceWorker registration failed:', err);
+          });
+        });
+      }
+    </script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics — BMW Kab Aayegi?</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='80' font-size='80' text-anchor='middle'%3E??%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">BMW Kab Aayegi?</div>
+            <a href="index.html" class="btn btn-outline-blue" style="margin-left: auto;">? Back to Site</a>
+        </div>
+    </header>
+
+    <div class="admin-container" style="max-width: 1200px; margin: 0 auto; padding: var(--spacing-lg);">
+        <div id="loginScreen" style="max-width: 400px; margin: 100px auto; background: var(--background); padding: var(--spacing-xl); border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); text-align: center;">
+            <h1 style="color: var(--primary); margin-bottom: var(--spacing-md);">?? Admin Login</h1>
+            <p style="color: #666; margin-bottom: var(--spacing-lg);">Enter admin password to view analytics</p>
+            <input type="password" id="adminPassword" placeholder="Password" style="width: 100%; padding: var(--spacing-md); border: 1px solid #ccc; border-radius: 10px; font-size: 1rem; margin-bottom: var(--spacing-md); box-sizing: border-box;">
+            <button id="adminLoginBtn" style="width: 100%; padding: var(--spacing-md); background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer;">Unlock Dashboard</button>
+        </div>
+
+        <div id="adminDashboard" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md); border-bottom: 2px solid #f0f0f0;">
+                <h1>?? Analytics Dashboard</h1>
+                <div>
+                    <button class="refresh-btn" onclick="loadData()">?? Refresh</button>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <h2 style="font-size: 1.25rem; font-weight: 600; color: var(--text); margin-bottom: var(--spacing-md); display: flex; align-items: center; gap: var(--spacing-sm);"><span style="font-size: 1.5rem;">??</span>Overview</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-xl);">
+                <div style="background: white; padding: var(--spacing-lg); border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-left: 4px solid var(--primary);">
+                    <h3 style="margin: 0 0 var(--spacing-sm) 0; color: #666; font-size: 0.9rem; text-transform: uppercase;">Total Events (7 days)</h3>
+                    <div class="value" id="totalEvents" style="font-size: 2.5rem; font-weight: 700; color: var(--text);">0</div>
+                </div>
+                <div style="background: white; padding: var(--spacing-lg); border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-left: 4px solid var(--accent);">
+                    <h3 style="margin: 0 0 var(--spacing-sm) 0; color: #666; font-size: 0.9rem; text-transform: uppercase;">Events Today</h3>
+                    <div class="value orange" id="todayEvents" style="font-size: 2.5rem; font-weight: 700; color: var(--accent);">0</div>
+                </div>
+                <div style="background: white; padding: var(--spacing-lg); border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-left: 4px solid var(--primary);">
+                    <h3 style="margin: 0 0 var(--spacing-sm) 0; color: #666; font-size: 0.9rem; text-transform: uppercase;">Top Event</h3>
+                    <div class="value blue" id="topEvent" style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">—</div>
+                </div>
+                <div style="background: white; padding: var(--spacing-lg); border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-left: 4px solid var(--primary);">
+                    <h3 style="margin: 0 0 var(--spacing-sm) 0; color: #666; font-size: 0.9rem; text-transform: uppercase;">Conversion Rate</h3>
+                    <div class="value" id="conversionRate" style="font-size: 2.5rem; font-weight: 700; color: var(--text);">0%</div>
+                </div>
+            </div>
+            <h2 style="font-size: 1.25rem; font-weight: 600; color: var(--text); margin-bottom: var(--spacing-md); display: flex; align-items: center; gap: var(--spacing-sm);"><span style="font-size: 1.5rem;">??</span>Conversion Funnel (Last 7 Days)</h2>
+            <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-md); padding: var(--spacing-sm); background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);">
+                <span style="flex: 1; font-weight: 600; color: var(--text);">Form Start</span>
+                <div style="flex: 2; height: 24px; background: #f0f0f0; border-radius: 12px; overflow: hidden;"><div id="funnel1Fill" style="height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.8s ease; width: 100%;"></div></div>
+                <span id="funnel1Count" style="font-weight: 700; color: var(--accent); min-width: 60px;">0</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-md); padding: var(--spacing-sm); background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);">
+                <span style="flex: 1; font-weight: 600; color: var(--text);">Calculate Click</span>
+                <div style="flex: 2; height: 24px; background: #f0f0f0; border-radius: 12px; overflow: hidden;"><div id="funnel2Fill" style="height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.8s ease; width: 0%;"></div></div>
+                <span id="funnel2Count" style="font-weight: 700; color: var(--accent); min-width: 60px;">0</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-md); padding: var(--spacing-sm); background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);">
+                <span style="flex: 1; font-weight: 600; color: var(--text);">Result View</span>
+                <div style="flex: 2; height: 24px; background: #f0f0f0; border-radius: 12px; overflow: hidden;"><div id="funnel3Fill" style="height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.8s ease; width: 0%;"></div></div>
+                <span id="funnel3Count" style="font-weight: 700; color: var(--accent); min-width: 60px;">0</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-md); padding: var(--spacing-sm); background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);">
+                <span style="flex: 1; font-weight: 600; color: var(--text);">WhatsApp Share</span>
+                <div style="flex: 2; height: 24px; background: #f0f0f0; border-radius: 12px; overflow: hidden;"><div id="funnel4Fill" style="height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.8s ease; width: 0%;"></div></div>
+                <span id="funnel4Count" style="font-weight: 700; color: var(--accent); min-width: 60px;">0</span>
+            </div>
+
+            <h2 style="font-size: 1.25rem; font-weight: 600; color: var(--text); margin-bottom: var(--spacing-md); display: flex; align-items: center; gap: var(--spacing-sm);"><span style="font-size: 1.5rem;">??</span>Most Shared Car Models</h2>
+            <div id="modelPopularity"></div>
+
+            <h2 style="font-size: 1.25rem; font-weight: 600; color: var(--text); margin-bottom: var(--spacing-md); display: flex; align-items: center; gap: var(--spacing-sm);"><span style="font-size: 1.5rem;">??</span>Recent Events</h2>
+            <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+                <thead>
+                    <tr>
+                        <th style="background: var(--primary); color: white; padding: var(--spacing-md); text-align: left; font-weight: 600;">Time</th>
+                        <th style="background: var(--primary); color: white; padding: var(--spacing-md); text-align: left; font-weight: 600;">Event</th>
+                        <th style="background: var(--primary); color: white; padding: var(--spacing-md); text-align: left; font-weight: 600;">Car Model</th>
+                        <th style="background: var(--primary); color: white; padding: var(--spacing-md); text-align: left; font-weight: 600;">IP (hashed)</th>
+                    </tr>
+                </thead>
+                <tbody id="eventsTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        const BACKEND_URL = window.location.origin;
+
+        if (sessionStorage.getItem('adminAuthenticated') === 'true') {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
+        }
+
+        document.getElementById('adminLoginBtn').addEventListener('click', () => {
+            const password = document.getElementById('adminPassword').value;
+            if (!password) {
+                alert('Password darj karein.');
+                return;
+            }
+            sessionStorage.setItem('adminPassword', password);
+            fetch(BACKEND_URL + '/api/admin/events?password=' + encodeURIComponent(password))
+                .then(async (res) => {
+                    if (!res.ok) throw new Error('Invalid password');
+                    return res.json();
+                })
+                .then((data) => {
+                    sessionStorage.setItem('adminAuthenticated', 'true');
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('adminDashboard').style.display = 'block';
+                    renderDashboard(data.data || []);
+                })
+                .catch(() => {
+                    alert('Galat password. Dobara try karein.');
+                });
+        });
+
+        document.getElementById('adminPassword').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') document.getElementById('adminLoginBtn').click();
+        });
+
+        function logout() {
+            sessionStorage.removeItem('adminAuthenticated');
+            sessionStorage.removeItem('adminPassword');
+            location.reload();
+        }
+
+        async function loadData() {
+            const password = sessionStorage.getItem('adminPassword');
+            if (!password) { logout(); return; }
+            const res = await fetch(BACKEND_URL + '/api/admin/events?password=' + encodeURIComponent(password));
+            const data = await res.json();
+            renderDashboard(data.data || []);
+        }
+
+        function renderDashboard(events) {
+            const now = new Date();
+            const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+            const recentEvents = events.filter(e => new Date(e.timestamp) >= sevenDaysAgo);
+            const todayEvents = events.filter(e => new Date(e.timestamp) >= todayStart);
+
+            document.getElementById('totalEvents').textContent = recentEvents.length;
+            document.getElementById('todayEvents').textContent = todayEvents.length;
+
+            const eventCounts = {};
+            recentEvents.forEach(e => {
+                eventCounts[e.eventName] = (eventCounts[e.eventName] || 0) + 1;
+            });
+
+            const topEvent = Object.entries(eventCounts).sort((a, b) => b[1] - a[1])[0];
+            document.getElementById('topEvent').textContent = topEvent ? topEvent[0] + ' (' + topEvent[1] + ')' : '—';
+
+            const formStarts = eventCounts['form_start'] || 0;
+            const resultViews = eventCounts['result_view'] || 0;
+            const conversionRate = formStarts > 0 ? Math.round((resultViews / formStarts) * 100) : 0;
+            document.getElementById('conversionRate').textContent = conversionRate + '%';
+
+            const funnelSteps = ['form_start', 'calculate_click', 'result_view', 'whatsapp_share'];
+            const funnelIds = ['funnel1', 'funnel2', 'funnel3', 'funnel4'];
+            let maxCount = formStarts || 1;
+
+            funnelSteps.forEach((step, idx) => {
+                const count = eventCounts[step] || 0;
+                const pct = maxCount > 0 ? Math.round((count / maxCount) * 100) : 0;
+                document.getElementById(funnelIds[idx] + 'Fill').style.width = pct + '%';
+                document.getElementById(funnelIds[idx] + 'Count').textContent = count;
+            });
+
+            const modelCounts = {};
+            recentEvents.forEach(e => {
+                if (e.carModel && (e.eventName === 'result_view' || e.eventName === 'whatsapp_share')) {
+                    modelCounts[e.carModel] = (modelCounts[e.carModel] || 0) + 1;
+                }
+            });
+
+            const modelContainer = document.getElementById('modelPopularity');
+            if (Object.keys(modelCounts).length === 0) {
+                modelContainer.innerHTML = '<p style="color: #666;">No model data yet.</p>';
+            } else {
+                const maxModelCount = Math.max(...Object.values(modelCounts));
+                modelContainer.innerHTML = Object.entries(modelCounts)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([model, count]) => {
+                        const pct = Math.round((count / maxModelCount) * 100);
+                        return '<div style="margin-bottom: var(--spacing-md);"><span style="display: inline-block; width: 150px; font-size: 0.9rem; color: var(--text);">' + model + '</span><div style="display: inline-block; vertical-align: middle; flex: 1; height: 20px; background: #f0f0f0; border-radius: 10px; overflow: hidden;"><div style="height: 100%; background: var(--accent); transition: width 0.8s ease; width: ' + pct + '%;"></div></div><span style="display: inline-block; width: 40px; font-weight: 600; color: var(--accent);">' + count + '</span></div>';
+                    }).join('');
+            }
+
+            const tableBody = document.getElementById('eventsTableBody');
+            const sortedEvents = [...events].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 50);
+            tableBody.innerHTML = sortedEvents.map(e => {
+                const date = new Date(e.timestamp).toLocaleString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+                const badgeClass = e.eventName === 'whatsapp_share' ? 'badge-green' : e.eventName === 'affiliate_click' ? 'badge-orange' : 'badge-blue';
+                return '<tr><td>' + date + '</td><td><span style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; background: ' + (badgeClass === 'badge-green' ? '#e8f5e9' : badgeClass === 'badge-orange' ? '#fff3e0' : '#e3f2fd') + '; color: ' + (badgeClass === 'badge-green' ? '#2e7d32' : badgeClass === 'badge-orange' ? '#ff6b00' : 'var(--primary)') + ';">' + e.eventName + '</span></td><td>' + (e.carModel || '—') + '</td><td style="font-family: monospace; font-size: 0.8rem;">' + e.ipAddress + '</td></tr>';
+            }).join('');
+        }
+    </script>
+</body>
+</html>

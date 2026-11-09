@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard — BMW Kab Aayegi?</title>
+
+    <!-- Security headers -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="referrer" content="no-referrer">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+          href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230066B1'/%3E%3Ctext x='50' y='68' font-size='48' font-family='Poppins,sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Admin-specific styles -->
+    <style>
+        body { background: var(--c-bg-alt); }
+
+        .admin-header {
+            background: var(--c-bg);
+            border-bottom: 2px solid var(--c-border);
+            padding: var(--sp-4) 0;
+            position: sticky;
+            top: 0;
+            z-index: var(--z-sticky);
+        }
+        .admin-header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--sp-4);
+            flex-wrap: wrap;
+        }
+        .admin-title {
+            font-size: var(--fs-xl);
+            font-weight: var(--fw-bold);
+            color: var(--c-primary);
+            margin: 0;
+        }
+        .admin-user-bar {
+            display: flex;
+            align-items: center;
+            gap: var(--sp-2);
+            flex-wrap: wrap;
+        }
+        .session-timer {
+            font-size: var(--fs-xs);
+            color: var(--c-text-muted);
+            font-family: var(--ff-mono);
+            padding: var(--sp-1) var(--sp-2);
+            background: var(--c-bg-alt);
+            border-radius: var(--r-sm);
+            font-variant-numeric: tabular-nums;
+        }
+        .session-timer.warning {
+            color: var(--c-warning);
+            background: var(--c-warning-bg);
+        }
+        .session-timer.expired {
+            color: var(--c-error);
+            background: var(--c-error-bg);
+        }
+
+        /* Stats grid */
+        .admin-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: var(--sp-4);
+            margin-bottom: var(--sp-6);
+        }
+        .admin-stat-card {
+            background: var(--c-bg);
+            padding: var(--sp-5);
+            border-radius: var(--r-lg);
+            box-shadow: var(--sh-md);
+            border-left: 4px solid var(--c-primary);
+            transition: transform var(--tr-base), box-shadow var(--tr-base);
+        }
+        .admin-stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--sh-lg);
+        }
+        .admin-stat-card.accent { border-left-color: var(--c-accent); }
+        .admin-stat-card h3 {
+            margin: 0 0 var(--sp-2) 0;
+            color: var(--c-text-muted);
+            font-size: var(--fs-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: var(--fw-semibold);
+        }
+        .admin-stat-card .value {
+            font-size: var(--fs-3xl);
+            font-weight: var(--fw-bold);
+            color: var(--c-text);
+            line-height: 1.1;
+            word-break: break-word;
+        }
+        .admin-stat-card .value.orange { color: var(--c-accent); }
+        .admin-stat-card .value.blue { color: var(--c-primary); }
+
+        /* Funnel */
+        .admin-funnel-row {
+            display: flex;
+            align-items: center;
+            gap: var(--sp-3);
+            margin-bottom: var(--sp-3);
+            padding: var(--sp-3) var(--sp-4);
+            background: var(--c-bg);
+            border-radius: var(--r-md);
+            box-shadow: var(--sh-sm);
+        }
+        .funnel-label {
+            flex: 1;
+            font-weight: var(--fw-semibold);
+            color: var(--c-text);
+            font-size: var(--fs-sm);
+            min-width: 100px;
+        }
+        .funnel-track {
+            flex: 2;
+            height: 24px;
+            background: var(--c-border-light);
+            border-radius: var(--r-full);
+            overflow: hidden;
+            min-width: 80px;
+        }
+        .funnel-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--c-primary), var(--c-accent));
+            border-radius: var(--r-full);
+            transition: width var(--tr-slower);
+            width: 0%;
+        }
+        .funnel-count {
+            min-width: 60px;
+            text-align: right;
+            font-weight: var(--fw-bold);
+            color: var(--c-accent);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Model popularity */
+        .model-row {
+            display: flex;
+            align-items: center;
+            gap: var(--sp-3);
+            margin-bottom: var(--sp-2);
+            padding: var(--sp-2) var(--sp-3);
+            background: var(--c-bg);
+            border-radius: var(--r-md);
+            box-shadow: var(--sh-xs);
+        }
+        .model-label {
+            width: 150px;
+            font-size: var(--fs-sm);
+            color: var(--c-text);
+            flex-shrink: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .model-track {
+            flex: 1;
+            height: 20px;
+            background: var(--c-border-light);
+            border-radius: var(--r-full);
+            overflow: hidden;
+            min-width: 60px;
+        }
+        .model-fill {
+            height: 100%;
+            background: var(--c-accent);
+            border-radius: var(--r-full);
+            transition: width var(--tr-slower);
+        }
+        .model-count {
+            width: 40px;
+            text-align: right;
+            font-weight: var(--fw-bold);
+            color: var(--c-accent);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Table */
+        .admin-table-wrapper {
+            overflow-x: auto;
+            border-radius: var(--r-lg);
+            box-shadow: var(--sh-md);
+            margin-bottom: var(--sp-6);
+        }
+        #adminDashboard table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--c-bg);
+        }
+        #adminDashboard th {
+            background: var(--c-primary);
+            color: var(--c-text-inverse);
+            padding: var(--sp-3) var(--sp-4);
+            text-align: left;
+            font-weight: var(--fw-semibold);
+            font-size: var(--fs-sm);
+            white-space: nowrap;
+        }
+        #adminDashboard td {
+            padding: var(--sp-3) var(--sp-4);
+            border-bottom: 1px solid var(--c-border-light);
+            font-size: var(--fs-sm);
+            color: var(--c-text);
+            vertical-align: middle;
+        }
+        #adminDashboard tbody tr:last-child td { border-bottom: none; }
+        #adminDashboard tbody tr:hover td { background: var(--c-primary-lighter); }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+         LOGIN SCREEN
+         ============================================================ -->
+    <div id="loginScreen" role="main" aria-labelledby="loginTitle">
+        <h1 id="loginTitle">🔒 Admin Login</h1>
+        <p>Enter your admin password to access the dashboard.</p>
+
+        <form id="loginForm" novalidate>
+            <label for="adminPassword" class="sr-only">Admin Password</label>
+            <input
+                type="password"
+                id="adminPassword"
+                name="adminPassword"
+                placeholder="Password"
+                autocomplete="current-password"
+                maxlength="100"
+                required
+                aria-required="true">
+            <button type="submit" id="adminLoginBtn">Unlock Dashboard</button>
+        </form>
+
+        <p id="loginError" class="error-msg" style="display:none;"
+           role="alert" aria-live="assertive"></p>
+    </div>
+        <!-- ============================================================
+         ADMIN DASHBOARD
+         ============================================================ -->
+    <div id="adminDashboard" hidden role="main">
+
+        <header class="admin-header">
+            <div class="container">
+                <h1 class="admin-title">📊 Analytics Dashboard</h1>
+                <div class="admin-user-bar">
+                    <span class="session-timer" id="sessionTimer" aria-live="polite">Session: 30:00</span>
+                    <button type="button" class="refresh-btn" id="refreshBtn" aria-label="Refresh data">
+                        🔄 Refresh
+                    </button>
+                    <button type="button" class="logout-btn" id="logoutBtn" aria-label="Logout">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="admin-container">
+
+            <!-- ===== Overview Stats ===== -->
+            <section aria-labelledby="overviewTitle">
+                <h2 id="overviewTitle">📈 Overview</h2>
+
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-card">
+                        <h3>Total Events (7 days)</h3>
+                        <div class="value" id="totalEvents">—</div>
+                    </div>
+                    <div class="admin-stat-card accent">
+                        <h3>Events Today</h3>
+                        <div class="value orange" id="todayEvents">—</div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <h3>Top Event</h3>
+                        <div class="value blue" id="topEvent">—</div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <h3>Conversion Rate</h3>
+                        <div class="value" id="conversionRate">—</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== Conversion Funnel ===== -->
+            <section aria-labelledby="funnelTitle">
+                <h2 id="funnelTitle">🔻 Conversion Funnel (Last 7 Days)</h2>
+
+                <div class="admin-funnel-row">
+                    <span class="funnel-label">Form Start</span>
+                    <div class="funnel-track">
+                        <div class="funnel-fill" id="funnel1Fill" style="width:100%"></div>
+                    </div>
+                    <span class="funnel-count" id="funnel1Count">0</span>
+                </div>
+
+                <div class="admin-funnel-row">
+                    <span class="funnel-label">Calculate Click</span>
+                    <div class="funnel-track">
+                        <div class="funnel-fill" id="funnel2Fill"></div>
+                    </div>
+                    <span class="funnel-count" id="funnel2Count">0</span>
+                </div>
+
+                <div class="admin-funnel-row">
+                    <span class="funnel-label">Result View</span>
+                    <div class="funnel-track">
+                        <div class="funnel-fill" id="funnel3Fill"></div>
+                    </div>
+                    <span class="funnel-count" id="funnel3Count">0</span>
+                </div>
+
+                <div class="admin-funnel-row">
+                    <span class="funnel-label">WhatsApp Share</span>
+                    <div class="funnel-track">
+                        <div class="funnel-fill" id="funnel4Fill"></div>
+                    </div>
+                    <span class="funnel-count" id="funnel4Count">0</span>
+                </div>
+            </section>
+
+            <!-- ===== Model Popularity ===== -->
+            <section aria-labelledby="modelTitle">
+                <h2 id="modelTitle">🚗 Most Shared Car Models</h2>
+                <div id="modelPopularity"></div>
+            </section>
+
+            <!-- ===== Recent Events ===== -->
+            <section aria-labelledby="eventsTitle">
+                <h2 id="eventsTitle">📋 Recent Events</h2>
+
+                <div class="admin-table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Time</th>
+                                <th scope="col">Event</th>
+                                <th scope="col">Car Model</th>
+                                <th scope="col">IP (hashed)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="eventsTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div><!-- /.admin-container -->
+    </div><!-- /#adminDashboard -->
+        <!-- ============================================================
+         JAVASCRIPT
+         ============================================================ -->
+    <script src="config.js"></script>
+    <script>
+    (function () {
+      'use strict';
+
+      /* -----------------------------------------------------------
+         01. CONFIG & CONSTANTS
+         ----------------------------------------------------------- */
+      const API_BASE = (window.CONFIG && window.CONFIG.BACKEND_URL) || '';
+
+      // Session config
+      const SESSION_TIMEOUT_MS = 30 * 60 * 1000;      // 30 min
+      const SESSION_WARNING_MS = 2 * 60 * 1000;       // warn at 28 min
+      const SESSION_STORAGE_KEY = 'admin_session';
+
+      // Auth header (matches backend requireAdmin)
+      const AUTH_HEADER = 'X-Admin-Password';
+
+      // Fetch timeout
+      const FETCH_TIMEOUT_MS = 15000;
+
+
+      /* -----------------------------------------------------------
+         02. SESSION MANAGER (secure)
+         -----------------------------------------------------------
+         Stores password + expiry in sessionStorage.
+         Cleared on tab close (sessionStorage) or timeout.
+         ----------------------------------------------------------- */
+      const Session = {
+        _data: null,
+
+        load: function () {
+          try {
+            const raw = sessionStorage.getItem(SESSION_STORAGE_KEY);
+            if (!raw) return false;
+
+            const parsed = JSON.parse(raw);
+            if (!parsed || !parsed.password || !parsed.expiresAt) return false;
+
+            if (Date.now() >= parsed.expiresAt) {
+              this.clear();
+              return false;
+            }
+
+            this._data = parsed;
+            return true;
+          } catch (_) {
+            return false;
+          }
+        },
+
+        save: function (password) {
+          const data = {
+            password: password,
+            expiresAt: Date.now() + SESSION_TIMEOUT_MS,
+          };
+          try {
+            sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(data));
+            this._data = data;
+          } catch (_) { /* quota exceeded — ignore */ }
+        },
+
+        getPassword: function () {
+          if (!this._data) return null;
+          if (Date.now() >= this._data.expiresAt) {
+            this.clear();
+            return null;
+          }
+          return this._data.password;
+        },
+
+        getExpiresAt: function () {
+          return this._data ? this._data.expiresAt : 0;
+        },
+
+        clear: function () {
+          this._data = null;
+          try {
+            sessionStorage.removeItem(SESSION_STORAGE_KEY);
+          } catch (_) { /* ignore */ }
+        },
+
+        isValid: function () {
+          return Boolean(this._data && Date.now() < this._data.expiresAt);
+        },
+      };
+
+
+      /* -----------------------------------------------------------
+         03. SECURE FETCH HELPER
+         -----------------------------------------------------------
+         - Adds X-Admin-Password header (never query string)
+         - 15s timeout via AbortController
+         - Handles 401 by clearing session
+         - No cookies sent (credentials: 'omit')
+         ----------------------------------------------------------- */
+      async function secureFetch(url, options) {
+        const opts = options || {};
+        const password = Session.getPassword();
+        if (!password) throw new Error('SESSION_EXPIRED');
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(function () {
+          controller.abort();
+        }, FETCH_TIMEOUT_MS);
+
+        try {
+          const res = await fetch(url, {
+            method: opts.method || 'GET',
+            headers: Object.assign(
+              {
+                'Content-Type': 'application/json',
+                [AUTH_HEADER]: password,
+              },
+              opts.headers || {}
+            ),
+            body: opts.body,
+            signal: controller.signal,
+            credentials: 'omit',
+          });
+
+          clearTimeout(timeoutId);
+
+          if (res.status === 401) {
+            Session.clear();
+            throw new Error('SESSION_EXPIRED');
+          }
+
+          if (!res.ok) {
+            const errData = await res.json().catch(function () { return {}; });
+            throw new Error(errData.error || 'Request failed');
+          }
+
+          return res.json();
+        } catch (err) {
+          clearTimeout(timeoutId);
+          if (err.name === 'AbortError') {
+            throw new Error('Request timed out');
+          }
+          throw err;
+        }
+      }
+
+
+      /* -----------------------------------------------------------
+         04. DOM HELPERS
+         ----------------------------------------------------------- */
+      const $ = function (id) { return document.getElementById(id); };
+
+      function setText(id, text) {
+        const el = $(id);
+        if (el) el.textContent = text;
+      }
+
+      function show(id) {
+        const el = $(id);
+        if (el) el.hidden = false;
+      }
+
+      function hide(id) {
+        const el = $(id);
+        if (el) el.hidden = true;
+      }
+            /* -----------------------------------------------------------
+         05. LOGIN HANDLER
+         ----------------------------------------------------------- */
+      const loginForm = $('loginForm');
+      const loginError = $('loginError');
+
+      if (loginForm) {
+        loginForm.addEventListener('submit', async function (e) {
+          e.preventDefault();
+
+          const passwordInput = $('adminPassword');
+          const password = passwordInput ? passwordInput.value.trim() : '';
+
+          if (!password) {
+            showLoginError('Password darj karein.');
+            return;
+          }
+
+          if (loginError) loginError.style.display = 'none';
+
+          const btn = $('adminLoginBtn');
+          const originalText = btn ? btn.textContent : '';
+          if (btn) {
+            btn.textContent = 'Checking...';
+            btn.disabled = true;
+          }
+
+          try {
+            // Test credentials via lightweight call
+            const res = await fetch(API_BASE + '/api/admin/events?limit=1', {
+              method: 'GET',
+              headers: { [AUTH_HEADER]: password },
+              credentials: 'omit',
+            });
+
+            if (res.status === 401) throw new Error('Invalid password');
+            if (!res.ok) throw new Error('Server error. Please try again.');
+
+            // Save session and show dashboard
+            Session.save(password);
+            hide('loginScreen');
+            show('adminDashboard');
+            startSessionTimer();
+            await loadAllData();
+          } catch (err) {
+            const msg = err.message === 'Invalid password'
+              ? 'Galat password. Dobara try karein.'
+              : (err.message || 'Login failed.');
+            showLoginError(msg);
+            if (passwordInput) passwordInput.value = '';
+          } finally {
+            if (btn) {
+              btn.textContent = originalText;
+              btn.disabled = false;
+            }
+          }
+        });
+      }
+
+      function showLoginError(message) {
+        if (!loginError) return;
+        loginError.textContent = message;
+        loginError.style.display = 'block';
+      }
+
+
+      /* -----------------------------------------------------------
+         06. SESSION TIMER
+         ----------------------------------------------------------- */
+      let sessionTimerInterval = null;
+
+      function startSessionTimer() {
+        if (sessionTimerInterval) clearInterval(sessionTimerInterval);
+        updateSessionTimer();
+        sessionTimerInterval = setInterval(updateSessionTimer, 1000);
+      }
+
+      function updateSessionTimer() {
+        const timerEl = $('sessionTimer');
+        if (!timerEl) return;
+
+        const remaining = Session.getExpiresAt() - Date.now();
+
+        if (remaining <= 0) {
+          clearInterval(sessionTimerInterval);
+          forceLogout('Session expired');
+          return;
+        }
+
+        const minutes = Math.floor(remaining / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+        timerEl.textContent =
+          'Session: ' + minutes + ':' + String(seconds).padStart(2, '0');
+        timerEl.classList.toggle('warning', remaining < SESSION_WARNING_MS);
+      }
+
+
+      /* -----------------------------------------------------------
+         07. DATA LOADING
+         ----------------------------------------------------------- */
+      async function loadAllData() {
+        try {
+          const results = await Promise.all([
+            secureFetch(API_BASE + '/api/admin/events'),
+            secureFetch(API_BASE + '/api/stats'),
+          ]);
+
+          const events = (results[0] && results[0].data) || [];
+          const stats = results[1] || {};
+
+          renderEvents(events);
+          renderStatsFromEvents(events, stats);
+        } catch (err) {
+          if (err.message === 'SESSION_EXPIRED') {
+            forceLogout('Session expired');
+          } else {
+            console.error('Load error:', err);
+          }
+        }
+      }
+
+
+      /* -----------------------------------------------------------
+         08. RENDER STATS
+         ----------------------------------------------------------- */
+      function renderStatsFromEvents(events, publicStats) {
+        const now = new Date();
+        const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+        const recent = events.filter(function (e) {
+          return new Date(e.timestamp) >= sevenDaysAgo;
+        });
+        const today = events.filter(function (e) {
+          return new Date(e.timestamp) >= todayStart;
+        });
+
+        setText('totalEvents', recent.length);
+        setText('todayEvents', today.length);
+
+        // Count events
+        const counts = {};
+        recent.forEach(function (e) {
+          const k = e.eventName || 'unknown';
+          counts[k] = (counts[k] || 0) + 1;
+        });
+
+        // Top event
+        const sorted = Object.keys(counts).sort(function (a, b) {
+          return counts[b] - counts[a];
+        });
+        const top = sorted[0];
+        setText('topEvent', top ? top + ' (' + counts[top] + ')' : '—');
+
+        // Conversion rate (result_view / form_start)
+        const formStarts = counts['form_start'] || 0;
+        const resultViews = counts['result_view'] || 0;
+        const rate = formStarts > 0
+          ? Math.round((resultViews / formStarts) * 100)
+          : 0;
+        setText('conversionRate', rate + '%');
+
+        renderFunnel(counts, formStarts);
+        renderModelPopularity(recent);
+      }
+
+
+      /* -----------------------------------------------------------
+         09. RENDER FUNNEL
+         ----------------------------------------------------------- */
+      function renderFunnel(counts, maxCount) {
+        const steps = ['form_start', 'calculate_click', 'result_view', 'whatsapp_share'];
+        const fillIds = ['funnel1Fill', 'funnel2Fill', 'funnel3Fill', 'funnel4Fill'];
+        const countIds = ['funnel1Count', 'funnel2Count', 'funnel3Count', 'funnel4Count'];
+        const max = maxCount || 1;
+
+        steps.forEach(function (step, idx) {
+          const count = counts[step] || 0;
+          const pct = Math.round((count / max) * 100);
+          const fillEl = $(fillIds[idx]);
+          if (fillEl) fillEl.style.width = Math.max(0, Math.min(100, pct)) + '%';
+          setText(countIds[idx], count);
+        });
+      }
+            /* -----------------------------------------------------------
+         10. RENDER MODEL POPULARITY
+         ----------------------------------------------------------- */
+      function renderModelPopularity(events) {
+        const container = $('modelPopularity');
+        if (!container) return;
+
+        const counts = {};
+        events.forEach(function (e) {
+          if (!e.carModel) return;
+          if (e.eventName !== 'result_view' && e.eventName !== 'whatsapp_share') return;
+          counts[e.carModel] = (counts[e.carModel] || 0) + 1;
+        });
+
+        const entries = Object.keys(counts)
+          .map(function (k) { return [k, counts[k]]; })
+          .sort(function (a, b) { return b[1] - a[1]; });
+
+        container.innerHTML = '';
+
+        if (entries.length === 0) {
+          const p = document.createElement('p');
+          p.className = 'text-muted';
+          p.textContent = 'No model data yet.';
+          container.appendChild(p);
+          return;
+        }
+
+        const max = entries[0][1] || 1;
+
+        entries.forEach(function (entry) {
+          const model = entry[0];
+          const count = entry[1];
+          const pct = Math.round((count / max) * 100);
+
+          const row = document.createElement('div');
+          row.className = 'model-row';
+
+          const label = document.createElement('span');
+          label.className = 'model-label';
+          label.textContent = model;
+          label.title = model;
+
+          const track = document.createElement('div');
+          track.className = 'model-track';
+          const fill = document.createElement('div');
+          fill.className = 'model-fill';
+          fill.style.width = pct + '%';
+          track.appendChild(fill);
+
+          const countEl = document.createElement('span');
+          countEl.className = 'model-count';
+          countEl.textContent = count;
+
+          row.appendChild(label);
+          row.appendChild(track);
+          row.appendChild(countEl);
+          container.appendChild(row);
+        });
+      }
+
+
+      /* -----------------------------------------------------------
+         11. RENDER EVENTS TABLE
+         ----------------------------------------------------------- */
+      function renderEvents(events) {
+        const tbody = $('eventsTableBody');
+        if (!tbody) return;
+
+        tbody.innerHTML = '';
+
+        const sorted = events
+          .slice()
+          .sort(function (a, b) {
+            return new Date(b.timestamp) - new Date(a.timestamp);
+          })
+          .slice(0, 50);
+
+        if (sorted.length === 0) {
+          const tr = document.createElement('tr');
+          const td = document.createElement('td');
+          td.colSpan = 4;
+          td.className = 'text-center text-muted';
+          td.textContent = 'No events yet.';
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+          return;
+        }
+
+        sorted.forEach(function (e) {
+          const tr = document.createElement('tr');
+
+          // Time
+          const tdTime = document.createElement('td');
+          tdTime.textContent = formatDateTime(e.timestamp);
+          tr.appendChild(tdTime);
+
+          // Event badge
+          const tdEvent = document.createElement('td');
+          const badge = document.createElement('span');
+          badge.className = 'badge-' + getBadgeClass(e.eventName);
+          badge.textContent = String(e.eventName || '').slice(0, 30);
+          tdEvent.appendChild(badge);
+          tr.appendChild(tdEvent);
+
+          // Car model
+          const tdModel = document.createElement('td');
+          tdModel.textContent = e.carModel || '—';
+          tr.appendChild(tdModel);
+
+          // IP (hashed, truncated)
+          const tdIp = document.createElement('td');
+          tdIp.style.fontFamily = 'var(--ff-mono)';
+          tdIp.style.fontSize = 'var(--fs-xs)';
+          tdIp.textContent = String(e.ipAddress || '').slice(0, 20);
+          tr.appendChild(tdIp);
+
+          tbody.appendChild(tr);
+        });
+      }
+
+      function formatDateTime(ts) {
+        try {
+          return new Date(ts).toLocaleString('en-IN', {
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          });
+        } catch (_) {
+          return '—';
+        }
+      }
+
+      function getBadgeClass(eventName) {
+        if (eventName === 'whatsapp_share') return 'green';
+        if (eventName === 'affiliate_click') return 'orange';
+        return 'blue';
+      }
+
+
+      /* -----------------------------------------------------------
+         12. LOGOUT
+         ----------------------------------------------------------- */
+      function forceLogout(reason) {
+        Session.clear();
+        if (sessionTimerInterval) {
+          clearInterval(sessionTimerInterval);
+          sessionTimerInterval = null;
+        }
+
+        hide('adminDashboard');
+        show('loginScreen');
+
+        const passwordInput = $('adminPassword');
+        if (passwordInput) passwordInput.value = '';
+
+        if (reason) showLoginError(reason + '. Please log in again.');
+      }
+
+      const logoutBtn = $('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function () {
+          forceLogout(null);
+        });
+      }
+
+      // Auto-check session when tab becomes visible again
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState !== 'visible') return;
+        if (!Session.isValid()) forceLogout('Session expired');
+      });
+
+
+      /* -----------------------------------------------------------
+         13. REFRESH BUTTON
+         ----------------------------------------------------------- */
+      const refreshBtn = $('refreshBtn');
+      if (refreshBtn) {
+        refreshBtn.addEventListener('click', async function () {
+          const originalText = refreshBtn.textContent;
+          refreshBtn.textContent = '🔄 Loading...';
+          refreshBtn.disabled = true;
+          try {
+            await loadAllData();
+          } finally {
+            refreshBtn.textContent = originalText;
+            refreshBtn.disabled = false;
+          }
+        });
+      }
+
+
+      /* -----------------------------------------------------------
+         14. INITIALIZATION
+         ----------------------------------------------------------- */
+      function init() {
+        if (Session.load() && Session.isValid()) {
+          hide('loginScreen');
+          show('adminDashboard');
+          startSessionTimer();
+          loadAllData();
+        } else {
+          show('loginScreen');
+          hide('adminDashboard');
+          const passwordInput = $('adminPassword');
+          if (passwordInput) passwordInput.focus();
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+    </script>
+</body>
+</html>
