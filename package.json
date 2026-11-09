@@ -85,6 +85,6 @@
     "url": "https://bmwkabayegi.in/donate"
   },
   "publishConfig": {
-    "access": "private"
+    "access": "restricted"
   }
 }

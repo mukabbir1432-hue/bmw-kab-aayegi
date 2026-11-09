@@ -958,4 +958,8 @@
       // Model
       if (!($('calcModel') || {}).value) {
         showError('calcModel', 'BMW model select karein.');
-       
+        isValid = false;
+      }
+    }
+});
+}) ();

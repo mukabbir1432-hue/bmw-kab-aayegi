@@ -23,7 +23,7 @@ const rateLimit = require('express-rate-limit');
 /* ---------------------------------------------------------------------
    01. IMPORTS
    --------------------------------------------------------------------- */
-const planController = require('../controllers/planController');
+const planController = require('../assets/controllers/planController');
 
 
 /* ---------------------------------------------------------------------
@@ -232,7 +232,7 @@ router.get(
   adminLimiter,
   requireAdmin,
   asyncHandler(async (req, res) => {
-    const Event = require('../models/Event');
+    const Event = require('../assets/models/Event');
 
     const events = await Event
       .find()
@@ -263,7 +263,7 @@ router.get(
   adminLimiter,
   requireAdmin,
   asyncHandler(async (req, res) => {
-    const Plan = require('../models/Plan');
+    const Plan = require('../assets/models/Plan');
 
     const leads = await Plan
       .find()
